@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: pulsar
+    component: pulsar-manager
+  name: pulsar-manager-configmap
+  namespace: default
+data:
+  backend_entrypoint.sh: |
+    /pulsar-manager/pulsar-manager/bin/pulsar-manager \
+      --spring.datasource.initialization-mode=never \
+      --spring.datasource.driver-class-name=org.postgresql.Driver \
+      --spring.datasource.url=jdbc:postgresql://127.0.0.1:5432/pulsar_manager \
+      --spring.datasource.username=pulsar \
+      --spring.datasource.password=pulsar \
+      --pagehelper.helperDialect=postgresql \
+      --bookie.host="http://bookkeeper:8000" \
+      --bookie.enable=true \
+      --redirect.scheme=http \
+      --redirect.port=80 \
+      --pulsar-manager.account=pulsar \
+      --pulsar-manager.password=pulsar \
+      --user.management.enable=true \
+      --default.environment.service_url=http://broker:8080 \
+      --tls.enabled=false \
+      --pulsar.peek.message=true
+  entrypoint.sh: "apk add --update openssl && rm -rf /var/cache/apk/*;\nmkdir conf;\n
+    \         \necho 'Starting PostGreSQL Server';\naddgroup pulsar;\nadduser --disabled-password
+    --ingroup pulsar pulsar;\nmkdir -p /run/postgresql;\nchown -R pulsar:pulsar /run/postgresql/;\nchown
+    -R pulsar:pulsar /data;\nchown pulsar:pulsar /pulsar-manager/init_db.sql;\nchmod
+    750 /data;\nsu - pulsar -s /bin/sh /pulsar-manager/startup.sh;\necho 'Starting
+    Pulsar Manager Front end';\nnginx;\necho 'Starting Pulsar Manager Back end';\n/pulsar-manager/pulsar-backend-entrypoint.sh;\n"

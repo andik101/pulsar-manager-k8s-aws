@@ -1,0 +1,47 @@
+# Backend service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pulsar
+    component: pulsar-manager
+  name: pulsar-manager-backend
+  namespace: default
+spec:
+  clusterIP: None
+  ports:
+  - name: backend
+    port: 7750
+    protocol: TCP
+    targetPort: 7750
+  selector:
+    app: pulsar
+    component: pulsar-manager
+  sessionAffinity: None                     
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+# Frontend service
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true" #this is for AWS LB for on-prem you have to change this to nginx or remove
+  labels:
+    app: pulsar
+    component: pulsar-manager
+  name: pulsar-manager
+  namespace: default
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: frontend
+    nodePort: 32560
+    port: 80
+    protocol: TCP
+    targetPort: 9527
+  selector:
+    app: pulsar
+    component: pulsar-manager
+  type: LoadBalancer
