@@ -13,7 +13,7 @@ Manifests for pulsar-manager to deploy in EKS cluster.
 
 ## Installing
 
-To install in kubernetes cluster:
+To install run the following commands:
 
 ```bash
 $ kubectl apply -f pulsar-manager-configmap.yaml
