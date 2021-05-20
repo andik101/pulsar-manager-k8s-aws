@@ -1,6 +1,6 @@
 # Pulsar manager version 0.3.0, kubernetes deployment
 
-Manifests for pulsar-manager to deploy in EKS kubernetes cluster.
+Manifests for pulsar-manager to deploy in EKS cluster.
 
 [Pulsar Manager](https://pulsar.apache.org/docs/en/administration-pulsar-manager/) is a web-based GUI management and monitoring tool that helps administrators and users manage and monitor tenants, namespaces, topics, subscriptions, brokers, clusters, and so on, and supports dynamic configuration of multiple environments.
 
@@ -22,7 +22,7 @@ $ kubectl apply -f pulsar-manager-services.yaml
 $ kubectl apply -f pulsar-manager-batch-job.yaml
 ```
 
-The commands deploys the `pulsar manager` on the EKS Kubernetes cluster in the default configuration.
+The commands deploys the `pulsar manager` on the EKS cluster in the default configuration.
 
 The docker image used for this deployment is the Streamnative maintained pulsar-manager version 0.3.0 chart.
 
