@@ -22,7 +22,7 @@ $ kubectl apply -f pulsar-manager-services.yaml
 $ kubectl apply -f pulsar-manager-batch-job.yaml
 ```
 
-The command deploys a batch Job on the Kubernetes cluster in the default configuration.
+The commands deploys the `pulsar manager` on the EKS Kubernetes cluster in the default configuration.
 
 The docker image used for this deployment is the Streamnative maintained pulsar-manager version 0.3.0 chart.
 
